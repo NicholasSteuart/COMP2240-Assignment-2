@@ -2,11 +2,12 @@
  * File: P1.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 7/9/24
- * Date Last Modified: 7/9/24
+ * Date Last Modified: 21/9/24
  * Description: MAIN file. Reads in data from file and performs concurrency based testing.
  */
 
  // PACKAGES //
+
  import java.io.File;
  import java.io.FileNotFoundException;
  import java.util.ArrayList;
@@ -15,7 +16,8 @@
 public class P1
 { 
     public static int currentCount = 0, totalCount = 0;
-    public static ArrayList<Mac> macList = new ArrayList<>();         
+    public static ArrayList<Mac> macList = new ArrayList<>(); 
+
     public static void main(String[] args) throws Exception
     {
         File file = new File(args[0]);
@@ -24,7 +26,7 @@ public class P1
             Intersection intersection = new Intersection(1);
 
             // CREATE MACS //
-            //System.out.println(sc.next());
+
             createMacs(sc.next(), intersection);
             createMacs(sc.next(), intersection);
             createMacs(sc.next(), intersection);

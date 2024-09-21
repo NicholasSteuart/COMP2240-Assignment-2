@@ -2,26 +2,26 @@
  * File: Mac.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 9/9/24
- * Date Last Modified: 9/9/24
+ * Date Last Modified: 21/9/24
  * Description: Implements the functionality for the Medical-Supply Automated Cart (MAC) used in Problem 1.
  */
 public class Mac implements Runnable
 {
     // CLASS VARIABLES //
 
-    private String id;              //MAC's ID
+    private final String ID;        //MAC's ID
     private String status;          //Contains the status of the MAC, whether it has "Stock" or "Empty"
     private String destination;     //Contains the destination the MAC must travel to
     private int totalCrossings;
     private final Intersection intersection;
 
-    // CONSTRUCTOR // 
+    // CONSTRUCTORS // 
 
     //PRE-CONDITION: No Pre-conditions
     //POST-CONDITION: Default Constructor instantiated with default values assigned to Class Variables id and status
     public Mac() 
     {
-        id = "";
+        ID = "";
         status = "";
         destination = "";
         totalCrossings = 0;
@@ -29,9 +29,9 @@ public class Mac implements Runnable
     }
     //PRE-CONDITION: No Pre-conditions
     //POST-CONDITION: Specialised Constructor instantiated with Parameters id and status assigned to Class Variables id and status respectively
-    public Mac(String id, String status, String destination, Intersection intersection)
+    public Mac(String ID, String status, String destination, Intersection intersection)
     {
-        this.id = id;
+        this.ID = ID;
         this.status = status;
         this.destination = destination;
         this.intersection = intersection;
@@ -49,7 +49,7 @@ public class Mac implements Runnable
         {
             try 
             {
-                System.out.println(id + " (" + status + "): Waiting at the Intersection. Going towards " + destination);
+                System.out.println(ID + " (" + status + "): Waiting at the Intersection. Going towards " + destination);
                 if(intersection.enterIntersection())
                 {
                     crossCheckpoints();
@@ -64,25 +64,25 @@ public class Mac implements Runnable
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println(id +  ": Finished.");
+        System.out.println(ID +  ": Finished.");
     }
     //PRE-CONDITION:
     //POST-CONDITION:
     public void crossCheckpoints() throws InterruptedException
     {
-        System.out.println(id + " (" + status + "): Crossing intersection Checkpoint 1.");
+        System.out.println(ID + " (" + status + "): Crossing intersection Checkpoint 1.");
         Thread.sleep(50);
-        System.out.println(id + " (" + status + "): Crossing intersection Checkpoint 2.");
+        System.out.println(ID + " (" + status + "): Crossing intersection Checkpoint 2.");
         Thread.sleep(50);
-        System.out.println(id + " (" + status + "): Crossing intersection Checkpoint 3.");
+        System.out.println(ID + " (" + status + "): Crossing intersection Checkpoint 3.");
         Thread.sleep(50);
-        System.out.println(id + " (" + status + "): Crossed the intersection.");
+        System.out.println(ID + " (" + status + "): Crossed the intersection.");
     }
     //PRE-CONDITION:
     //POST-CONDITION:
     public void executeTask()
     {
-        status = ("Empty".equals(status)) ? "Stock" : "Empty";
+        status = (status.equals("Empty")) ? "Stock" : "Empty";
         changeDirection();
     }
     //PRE-CONDITION:
@@ -98,57 +98,12 @@ public class Mac implements Runnable
         }
     }
 
-    // MUTATORS //
+    // MUTATOR //
 
-    //PRE-CONDITION: Mac Constructor must be instantiated
-    //POST-CONDITION: Class Variable id mutated by Parameter id
-    public void setID(String id)
-    {
-        this.id = id;
-    }
-    //PRE-CONDITION: Mac Constructor must be instantiated
-    //POST-CONDITION: Class Variable status mutated by Parameter status
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-    //PRE-CONDITION: Mac Constructor must be instantiated
-    //POST-CONDITION: Class Variable destination mutated by Parameter destination
-    public void setDestination(String destination)
-    {
-        this.destination = destination;
-    }
     //PRE-CONDITION:
     //POST-CONDITION:
     public void setTotalCrossings(int totalCrossings)
     {
         this.totalCrossings = totalCrossings;
-    }
-
-    // ACCESSORS //
-
-    //PRE-CONDITION: Mac Constructor must be instantiated
-    //POST-CONDITION: Class Variable id returned
-    public String getID()
-    {
-        return id;
-    }
-    //PRE-CONDITION: Mac Constructor must be instantiated
-    //POST-CONDITION: Class Variable status returned
-    public String getStatus()
-    {
-        return status;
-    }
-    //PRE-CONDITION: Mac Constructor must be instantiated
-    //POST-CONDITION: Class Variable destination returned
-    public String getDestination()
-    {
-        return destination;
-    }
-    //PRE-CONDITION:
-    //POST-CONDITION:
-    public int getTotalCrossings()
-    {
-        return totalCrossings;
     }
 }

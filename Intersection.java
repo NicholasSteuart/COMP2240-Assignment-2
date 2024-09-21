@@ -2,12 +2,13 @@
  * File: Intersection.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 9/9/24
- * Date Last Modified: 9/9/24
+ * Date Last Modified: 21/9/24
  * Description: Implements the functionality of the Intersection in the Problem 1. It utilises Semaphores to prevent
  * collisions, deadlock, livelock and starvation of MAC operations.
  */
 
 // PACKAGES //
+
 import java.util.concurrent.Semaphore;
 
 public class Intersection 
@@ -16,6 +17,7 @@ public class Intersection
 
     private final Semaphore semaphore;
     private int trail1Count = 0, trail2Count = 0;
+
     // CONSTRUCTORS //
 
     //PRE-CONDITION:
@@ -54,13 +56,6 @@ public class Intersection
     {
         semaphore.release();
         return true;
-    }
-    //PRE-CONDITION:
-    //POST-CONDITION:
-    public String passCheckpoint(int checkpoint) throws InterruptedException
-    {
-        Thread.sleep(50); 
-        return "Checkpoint " + checkpoint + ".";
     }
     //PRE-CONDITION:
     //POST-CONDITION:
