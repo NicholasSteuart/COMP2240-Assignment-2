@@ -9,8 +9,8 @@
  // PACKAGES //
  import java.io.File;
  import java.io.FileNotFoundException;
- import java.util.Scanner;
  import java.util.ArrayList;
+ import java.util.Scanner;
 
 public class P1
 { 
@@ -21,7 +21,6 @@ public class P1
         File file = new File(args[0]);
         try(Scanner sc = new Scanner(file))
         {
-            int totalCrossings = 0;
             Intersection intersection = new Intersection(1);
 
             // CREATE MACS //
@@ -31,7 +30,7 @@ public class P1
             createMacs(sc.next(), intersection);
             createMacs(sc.next(), intersection);
 
-            totalCrossings = Integer.parseInt(sc.next().substring(2));
+            int totalCrossings = Integer.parseInt(sc.next().substring(2));
 
             sc.close();
 
@@ -45,7 +44,6 @@ public class P1
         catch(FileNotFoundException e)
         {
             System.out.println("File " + args[0] + " was not found.");
-            e.printStackTrace();
         }
     }
     
@@ -63,22 +61,22 @@ public class P1
         //Determines how to instantiate the MAC(s) based on the token parsed in
         switch (token.substring(0, eqPosition))
         {
-            case "CSR1":
+            case "CSR1" -> {
                 status = "Stock";
                 destination = "ED1";
-                break;
-            case "CSR2":
+            }
+            case "CSR2" -> {
                 status = "Stock";
                 destination = "ED2";
-                break;
-            case "ED1":
+            }
+            case "ED1" -> {
                 status = "Empty";
                 destination = "CSR1";
-                break;
-            case "ED2":
+            }
+            case "ED2" -> {
                 status = "Empty";
                 destination = "CSR2";
-                break;
+            }
         }
 
         //Adds a new mac to the current Macs list. 

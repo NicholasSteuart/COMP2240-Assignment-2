@@ -52,11 +52,8 @@ public class Mac implements Runnable
                 System.out.println(id + " (" + status + "): Waiting at the Intersection. Going towards " + destination);
                 if(intersection.enterIntersection())
                 {
-                    System.out.println(id + " (" + status + "): Crossing intersection " + intersection.passCheckpoint(1));
-                    System.out.println(id + " (" + status + "): Crossing intersection " + intersection.passCheckpoint(2));
-                    System.out.println(id + " (" + status + "): Crossing intersection " + intersection.passCheckpoint(3));
-                    System.out.println(id + " (" + status + "): Crossed the intersection.");
-                    intersection.exitIntersection();
+                    crossCheckpoints();
+                    intersection.exitIntersection();   
                     currentCrosses++;
                     executeTask();
                     System.out.println(intersection.updateTrailCompletions(destination));
@@ -69,12 +66,23 @@ public class Mac implements Runnable
         }
         System.out.println(id +  ": Finished.");
     }
-
+    //PRE-CONDITION:
+    //POST-CONDITION:
+    public void crossCheckpoints() throws InterruptedException
+    {
+        System.out.println(id + " (" + status + "): Crossing intersection Checkpoint 1.");
+        Thread.sleep(50);
+        System.out.println(id + " (" + status + "): Crossing intersection Checkpoint 2.");
+        Thread.sleep(50);
+        System.out.println(id + " (" + status + "): Crossing intersection Checkpoint 3.");
+        Thread.sleep(50);
+        System.out.println(id + " (" + status + "): Crossed the intersection.");
+    }
     //PRE-CONDITION:
     //POST-CONDITION:
     public void executeTask()
     {
-        status = (status == "Empty") ? "Stock" : "Empty";
+        status = ("Empty".equals(status)) ? "Stock" : "Empty";
         changeDirection();
     }
     //PRE-CONDITION:
@@ -83,18 +91,10 @@ public class Mac implements Runnable
     {
         switch(destination)
         {
-            case "CSR1": 
-                destination = "ED1";
-                break;
-            case "CSR2":
-                destination = "ED2";
-                break;
-            case "ED1":
-                destination = "CSR1";
-                break;       
-            case "ED2":
-                destination = "CSR2";
-                break;
+            case "CSR1" -> destination = "ED1";
+            case "CSR2" -> destination = "ED2";
+            case "ED1" -> destination = "CSR1";
+            case "ED2" -> destination = "CSR2";
         }
     }
 
