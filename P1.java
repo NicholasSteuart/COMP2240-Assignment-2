@@ -6,12 +6,12 @@
  * Description: MAIN file. Reads in data from file and performs concurrency based testing.
  */
 
- // PACKAGES //
+// PACKAGES //
 
- import java.io.File;
- import java.io.FileNotFoundException;
- import java.util.ArrayList;
- import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class P1
 { 
