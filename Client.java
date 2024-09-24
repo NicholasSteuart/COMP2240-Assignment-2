@@ -2,69 +2,74 @@
  * File: Client.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 23/9/24
- * Date Last Modified: 23/9/24
- * Description: Implements the functionality for a thread of a client using the coffee machine in Problem 2.
+ * Date Last Modified: 24/9/24
+ * Description: Implements the Thread functionality for a Client using the coffee machine in Problem 2.
  */
 public class Client implements Runnable
 {
     // CLASS VARIABLES //
 
-    private String id;
-    private String type;
-    private int brewTime;
-    private CoffeeMachine machine;
+    private final String ID;        //Client's unique ID of the form Hn or Cn, depending on if the client is brewing a hot or cold coffee and n being a unique postive integer
+    private String type;            //The Client's type, whether it's asking for a Hot (H) or Cold (C) coffee
+    private int brewTime;           //The amount of time the Client's coffee will take to brew
+    private CoffeeMachine machine;  //The Coffee Machine Monitor which controls the critical section of problem 2
 
     // CONSTRUCTORS //
 
-    //PRE-CONDITION:
-    //POST-CONDITION:
+    //PRE-CONDITION: No pre-conditions
+    //POST-CONDITION: Default Constructor instantiated with default values assigned to Class Variables ID, type, brewTime and machine
+
     public Client() 
     {
-        id = "";
+        ID = "";
         type = "";
         brewTime = 0;
         machine = null;
     }
-    //PRE-CONDITION:
-    //POST-CONDITION:
-    public Client(String id, String type, int brewTime, CoffeeMachine machine)
+    //PRE-CONDITION: No pre-conditions
+    //POST-CONDITION: Specialised Constructor instantiated with Parameters ID, type, brewTime and machine assigned to Class Variables ID, type, brewTime and machine respectively
+
+    public Client(String ID, String type, int brewTime, CoffeeMachine machine)
     {
-        this.id = id;
+        this.ID = ID;
         this.type = type;
         this.brewTime = brewTime;
         this.machine = machine;
     }
     
     // METHODS //
+
+    //PRE-CONDITION: An instance of this Class must be instantiated as a Thread Object
+    //POST-CONDITION: Thread Object finishes it's parallel processing.
     @Override
     public void run()
     {
         try
         {
-            machine.requestCoffee(this);
+            machine.requestCoffee(this);    //Thread tries to enter it's critical section
         }
         catch (InterruptedException e)
         {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();     //Interrupt Thread if it must wait
         }
     }
 
     // ACCESSORS //
 
-    //PRE-CONDITION:
-    //POST-CONDITION:
+    //PRE-CONDITION: Client Constructor instantiated and Class Variable ID must be instantiated
+    //POST-CONDITION: Class Variable ID returned
     public String getID()
     {
-        return id;
+        return ID;
     }
-    //PRE-CONDITION:
-    //POST-CONDITION:
+    //PRE-CONDITION: Client Constructor instantiated and Class Variable type must be instantiated
+    //POST-CONDITION: Class Variable type returned
     public String getType()
     {
         return type;
     }
-    //PRE-CONDITION:
-    //POST-CONDITION:
+    //PRE-CONDITION: Client Constructor instantiated and Class Variable brewTime must be instantiated
+    //POST-CONDITION: Class Variable brewTime returned
     public int getBrewTime()
     {
         return brewTime;
