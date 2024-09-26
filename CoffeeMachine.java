@@ -1,3 +1,5 @@
+
+
 /* COMP2240 Assignment 2
  * File: CoffeeMachine.java
  * Author: Nicholas Steuart c3330826
@@ -5,13 +7,17 @@
  * Date Last Modified: 24/9/24
  * Description: Implements the functionality of a Monitor used to maintain the operation of a coffee machine for Problem 2.
  */
+
+// PACKAGES //
+
 public class CoffeeMachine
 {
     // CLASS VARIABLES //
 
-    private String currentMode = "NONE";    //The current mode of the coffee machine, whether it is brewing "HOT" or "COLD" coffee at the moment
-    private int availableDispensers = 3;    //The current dispensers available by the coffee machine
-    private int timer = 0;                  //The global time of the simulation
+    private String currentMode = "NONE";            //The current mode of the coffee machine, whether it is brewing "HOT" or "COLD" coffee at the moment
+    private int availableDispensers = 3;          //The current dispensers available by the coffee machine
+    private int globalTime = 0;                     //The global time of the simulation
+    private int nextThreadToRun = 1;    
     
     // CONSTRUCTOR //
 
@@ -22,27 +28,48 @@ public class CoffeeMachine
 
     // METHODS //
 
-    //PRE-CONDITION: Parameter Client client must not be null
-    //POST-CONDITION: Thread Object finishes it's parallel processing
-    public synchronized void requestCoffee(Client client) throws InterruptedException
+    //PRE-CONDITION: 
+    //POST-CONDITION: 
+    public synchronized void enterMonitor(Client client) throws InterruptedException
     {
-        while(!currentMode.equals(client.getType()) && !currentMode.equals("NONE") || availableDispensers == 0)
-        {
-            wait(); //Monitors waits the current Thread object IF the currentMode does not match the Thread client's type AND if the currentMode is not equal to NONE OR if there are no available dispensers available
-        }
-
-        if(currentMode.equals("NONE"))  //Otherwise, if the coffee machine is currently not brewing, currentMode is now equal to the client's type
+        if(currentMode.equals("NONE"))
         {
             currentMode = client.getType();
         }
+        //Conditions for a Thread to enter the Monitor
+        //Condition 1:  Client Threads need to be run in the order the Threads data was read in
+        //Condition 2:  The current mode of the coffee machine needs to be equal to the client
+        //Condition 3:  A dispenser needs to be available
 
-        availableDispensers--;  //Decrement available dispensers
-        System.out.println("(" + timer + ") " + client.getID() + " uses dispenser " + availableDispensers + " (time: " + client.getBrewTime() + ")");
-        availableDispensers++; //Increment available dispensers as the client's coffee has been brewed
-        if(availableDispensers == 3)    //IF the coffee machine has no particular type of coffee brewing
+        //IF even one is not fulfilled, the Thread must wait
+        while(client.getPositionInQueue() != nextThreadToRun || !currentMode.equals(client.getType()) || availableDispensers == 0)
         {
-            currentMode = "NONE";   //currentMode is now set to default
-            notifyAll();            //Notify all Thread objects waiting that the coffee machine is available
+            //System.out.println("CLIENT: " + client.getID() + " WAITING");
+            wait();
+        }
+        availableDispensers--; 
+        nextThreadToRun++;
+    }
+    //PRE-CONDITION: 
+    //POST-CONDITION:
+    public synchronized void exitMonitor(Client client) 
+    {
+        availableDispensers++;
+        if(availableDispensers == 3)
+        {
+            currentMode = "NONE";
+        }
+        notifyAll();
+    }
+    //PRE-CONDITION: 
+    //POST-CONDITION:
+    public void brewCoffee(Client client)
+    {
+        int dispenserNum = 3 - availableDispensers;
+        System.out.println("(" + globalTime + ") " + client.getID() + " uses dispenser " + dispenserNum + " (time: " + client.getBrewTime() + ")");
+        if(client.getBrewTime() > globalTime)
+        {
+            globalTime += client.getBrewTime();
         }
     }
 }

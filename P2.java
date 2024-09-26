@@ -32,18 +32,21 @@ public class P2
         {
             CoffeeMachine coffeeMachine = new CoffeeMachine();  //Instantiates the Coffee Machine used in problem 2
             int clients = sc.nextInt(); //Reads in the total amount of Client Objects in the file
-
+            int positionInQueue = 1;    //Manages the position the Thread object is assigned to be run
+            
             for(int i = 0; i < clients; i++)
             {
                 String id = sc.next();  //Stores in the current read-in Client's ID
                 String type = id.substring(0,1);    //Stores the current read-in Client's type
                 int brewTime = sc.nextInt();    //Stores te current read-in Client's brewTime
-                clientList.add(new Client(id, type, brewTime, coffeeMachine));  //Adds a new Client to the current Client list. 
+                clientList.add(new Client(id, type, brewTime, positionInQueue, coffeeMachine));  //Adds a new Client to the current Client list. 
+                positionInQueue++;
             }
 
             sc.close(); //Close Scanner
 
             // START THREAD EXECUTION //
+
             for(Client client: clientList)
             {
                 new Thread(client).start();

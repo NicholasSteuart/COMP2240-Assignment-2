@@ -12,7 +12,9 @@ public class Client implements Runnable
     private final String ID;        //Client's unique ID of the form Hn or Cn, depending on if the client is brewing a hot or cold coffee and n being a unique postive integer
     private String type;            //The Client's type, whether it's asking for a Hot (H) or Cold (C) coffee
     private int brewTime;           //The amount of time the Client's coffee will take to brew
+    private int positionInQueue;    //Stores the Thread's position in queue to be run as the read in file states that the Threads must be run in the order they are ready in from file
     private CoffeeMachine machine;  //The Coffee Machine Monitor which controls the critical section of problem 2
+
 
     // CONSTRUCTORS //
 
@@ -24,16 +26,19 @@ public class Client implements Runnable
         ID = "";
         type = "";
         brewTime = 0;
+        positionInQueue = 0;
         machine = null;
+
     }
     //PRE-CONDITION: No pre-conditions
     //POST-CONDITION: Specialised Constructor instantiated with Parameters ID, type, brewTime and machine assigned to Class Variables ID, type, brewTime and machine respectively
 
-    public Client(String ID, String type, int brewTime, CoffeeMachine machine)
+    public Client(String ID, String type, int brewTime, int positionInQueue, CoffeeMachine machine)
     {
         this.ID = ID;
         this.type = type;
         this.brewTime = brewTime;
+        this.positionInQueue = positionInQueue;
         this.machine = machine;
     }
     
@@ -46,7 +51,9 @@ public class Client implements Runnable
     {
         try
         {
-            machine.requestCoffee(this);    //Thread tries to enter it's critical section
+            machine.enterMonitor(this);    
+            machine.brewCoffee(this);
+            machine.exitMonitor(this);     
         }
         catch (InterruptedException e)
         {
@@ -54,6 +61,14 @@ public class Client implements Runnable
         }
     }
 
+    // MUTATOR //
+
+    //PRE-CONDITION: An instance of this Class must be instantiated
+    //POST-CONDITION: Class variable positionInQueue mutated by parameter positionInQueue
+    public void setPositionInQueue(int positionInQueue)
+    {
+        this.positionInQueue = positionInQueue;
+    }
     // ACCESSORS //
 
     //PRE-CONDITION: Client Constructor instantiated and Class Variable ID must be instantiated
@@ -73,5 +88,11 @@ public class Client implements Runnable
     public int getBrewTime()
     {
         return brewTime;
+    }
+    //PRE-CONDITION: Client Constructor instantiated and Class Variable positionInQueue must be instantiated
+    //POST-CONDITION: Class Variable positionInQueue returned
+    public int getPositionInQueue()
+    {
+        return positionInQueue;
     }
 }
