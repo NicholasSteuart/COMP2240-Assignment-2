@@ -2,7 +2,7 @@
  * File: Mac.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 9/9/24
- * Date Last Modified: 24/9/24
+ * Date Last Modified: 27/9/24
  * Description: Implements the Thread functionality for the Medical-Supply Automated Cart (MAC) used in Problem 1.
  */
 public class Mac implements Runnable

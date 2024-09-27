@@ -2,7 +2,7 @@
  * File: Client.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 23/9/24
- * Date Last Modified: 24/9/24
+ * Date Last Modified: 27/9/24
  * Description: Implements the Thread functionality for a Client using the coffee machine in Problem 2.
  */
 public class Client implements Runnable
@@ -31,7 +31,7 @@ public class Client implements Runnable
 
     }
     //PRE-CONDITION: No pre-conditions
-    //POST-CONDITION: Specialised Constructor instantiated with Parameters ID, type, brewTime and machine assigned to Class Variables ID, type, brewTime and machine respectively
+    //POST-CONDITION: Specialised Constructor instantiated with Parameters ID, type, brewTime, positionInQueue and machine assigned to Class Variables ID, type, brewTime, positionInQueue and machine respectively
 
     public Client(String ID, String type, int brewTime, int positionInQueue, CoffeeMachine machine)
     {
@@ -69,6 +69,7 @@ public class Client implements Runnable
     {
         this.positionInQueue = positionInQueue;
     }
+    
     // ACCESSORS //
 
     //PRE-CONDITION: Client Constructor instantiated and Class Variable ID must be instantiated

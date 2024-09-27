@@ -2,7 +2,7 @@
  * File: P2.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 7/9/24
- * Date Last Modified: 24/9/24
+ * Date Last Modified: 27/9/24
  * Description: MAIN file. Reads in data from file and outputs Monitor-controlled concurrent thread execution simulating Problem 2.
  */
 
@@ -30,11 +30,11 @@ public class P2
 
         try(Scanner sc = new Scanner(file))
         {
-            CoffeeMachine coffeeMachine = new CoffeeMachine();  //Instantiates the Coffee Machine used in problem 2
-            int clients = sc.nextInt(); //Reads in the total amount of Client Objects in the file
+            int totalClients = sc.nextInt(); //Reads in the total amount of Client Objects in the file
+            CoffeeMachine coffeeMachine = new CoffeeMachine(totalClients);  //Instantiates the Coffee Machine used in problem 2
             int positionInQueue = 1;    //Manages the position the Thread object is assigned to be run
-            
-            for(int i = 0; i < clients; i++)
+
+            for(int i = 0; i < totalClients; i++)
             {
                 String id = sc.next();  //Stores in the current read-in Client's ID
                 String type = id.substring(0,1);    //Stores the current read-in Client's type

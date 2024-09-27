@@ -2,7 +2,7 @@
  * File: Intersection.java
  * Author: Nicholas Steuart c3330826
  * Date Created: 9/9/24
- * Date Last Modified: 24/9/24
+ * Date Last Modified: 27/9/24
  * Description: Implements the functionality of the Intersection in the Problem 1. It utilises Semaphores to prevent
  * collisions, deadlock, livelock and starvation of MAC operations.
  */
